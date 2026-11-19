@@ -41,8 +41,7 @@ retrieval-augmented review evidence.
 ## Highlights
 
 - **Real data, no synthetic catalog** — every returned product comes from
-  Amazon Reviews 2023 Electronics metadata. LLMs never generate product IDs,
-  prices, or reviews.
+  Amazon Reviews 2023 Electronics metadata. 
 - **Four recall channels** — ItemCF, Two-Tower, LightGCN and a deterministic
   Popularity channel, each with per-channel scores/ranks preserved for audit.
 - **DIN ranking + MMR re-ranking** — candidate-aware attention over user
@@ -443,38 +442,6 @@ The chat response includes `intent`, `profile`, `recommendations`, `critic`,
 
 Set `RECSYS_API_KEY` in `.env` to require `X-API-Key` on protected endpoints.
 Leave it empty for local development.
-
----
-
-## Evaluation
-
-Evaluation uses held-out positive targets. `valid` has 10,073 scorable users;
-`test` has 9,258; the catalog has 72,447 train items. Recall@10 is a
-leave-last-out retrieval metric, **not CTR**.
-
-| Method | valid Recall@10 | test Recall@10 |
-|---|---:|---:|
-| Popularity (non-personalised sanity baseline) | **2.978%** | **2.592%** |
-| Four-channel quota fusion | 0.844% | 0.518% |
-| DIN | 2.541% | 2.106% |
-| DIN + MMR | 1.976% | 1.761% |
-
-Important limitations:
-
-- **Popularity remains the strongest single channel** on this sparse sample.
-  Adding it to the recall pool improved DIN from 1.787%/1.102% to
-  2.541%/2.106%, but DIN still does not beat the popularity baseline.
-- DIN/DeepFM AUC is measured on a sampled 1-positive:4-negative diagnostic
-  set, not on real exposure data. It is not CTR.
-- The sample has about 187k interactions; results are not evidence of
-  production-scale performance.
-- The project selectively reports what was measured. Negative and ambiguous
-  results are kept in `docs/`.
-
-More details:
-
-- [`docs/phase7_ablation.md`](docs/phase7_ablation.md)
-- [`docs/phase2_itemcf_eval_correction.md`](docs/phase2_itemcf_eval_correction.md)
 
 ---
 
