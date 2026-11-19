@@ -31,7 +31,6 @@ retrieval-augmented review evidence.
 - [Quick start](#quick-start)
 - [Model artifacts](#model-artifacts)
 - [API](#api)
-- [Evaluation](#evaluation)
 - [Design notes](#design-notes)
 - [What is not included](#what-is-not-included)
 - [Citation](#citation)
@@ -178,18 +177,6 @@ Intent → Profile → Recommendation → Review RAG → Critic
 Retry behavior: rejected item IDs are excluded and the Recommendation Agent is
 called again, up to the configured `max_critic_retries` (default 2).
 
-### What the LLM does and does not do
-
-| Uses DeepSeek | Does not use DeepSeek |
-|---|---|
-| Intent parsing | Product IDs |
-| Recommendation explanations | Prices |
-| Semantic Critic review | Category metadata |
-| | Review evidence |
-| | Recall/ranking decisions |
-
-The LLM never selects products directly. Products and prices are read from
-`item_features.parquet`; review evidence is read from the review index.
 
 ---
 
