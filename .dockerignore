@@ -1,0 +1,40 @@
+# Secrets and local environment: never in the build context or image.
+.env
+.env.*
+!.env.example
+
+# Local virtual environment and caches.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Large generated artifacts are bind-mounted at runtime, never baked in.
+data/
+checkpoints/
+indexes/
+logs/
+.cache/
+*.sqlite
+*.sqlite-*
+
+# Components intentionally excluded from the backend image/repository.
+frontend/
+tests/
+docs/
+
+# Git/IDE/OS files.
+.git/
+.gitignore
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local reports/notebooks.
+*.ipynb

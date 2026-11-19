@@ -1,0 +1,47 @@
+name: agentrec
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: agentrec-api:local
+    env_file:
+      - .env
+    environment:
+      APP_LOG_LEVEL: INFO
+      HF_HOME: /home/app/.cache/huggingface
+    command:
+      - python
+      - -m
+      - uvicorn
+      - src.api.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    ports:
+      - "${RECSYS_API_PORT:-8000}:8000"
+    volumes:
+      - ./data:/app/data
+      - ./checkpoints:/app/checkpoints
+      - ./indexes:/app/indexes
+      - ./logs:/app/logs
+      - hf_cache:/home/app/.cache/huggingface
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen("http://127.0.0.1:8000/api/v1/health", timeout=5)
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    restart: unless-stopped
+    init: true
+
+volumes:
+  hf_cache:

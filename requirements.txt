@@ -1,0 +1,63 @@
+# ===========================================================================
+# Full project dependencies, grouped by implementation phase.
+# Phase 0 only needs requirements-phase0.txt (a small subset).
+# Python: 3.11.x
+# ===========================================================================
+
+# --- Phase 0: configuration, LLM client, tests -----------------------------
+openai>=3.52,<4
+# Windows: jiter 0.19.0 fails to load its DLL on this machine. 0.16.0 is
+# verified against openai 3.52.0 and satisfies its jiter>=0.16 constraint.
+jiter==0.16.0
+pydantic>=2.9,<3
+pydantic-settings>=2.6,<3
+python-dotenv>=1.0
+PyYAML>=6.0,<7
+pytest>=8.3
+httpx>=0.27
+
+# --- Phase 1: data processing ----------------------------------------------
+# Versions verified on this machine (Python 3.11.9):
+# newer pandas 3.x / pyarrow 26 / duckdb 2.x Windows wheels fail to load their
+# DLLs against the VC runtime bundled with Python 3.11.9.
+numpy==2.4.6
+pandas==2.2.3
+polars==2.1.0
+pyarrow==17.0.0
+duckdb==1.1.3
+scipy==1.17.1
+scikit-learn==1.9.1
+
+# --- Phase 2: deep learning recommenders ------------------------------------
+# CPU build verified on this machine: torch 2.5.1+cpu from the PyTorch CPU
+# index; newer wheels failed against Python 3.11.9's VC runtime.
+torch==2.5.1
+faiss-cpu==1.9.0.post1
+# BGE local embeddings (CPU verified). regex 2026.x fails to load its Windows
+# DLL on this machine; 2024.11.6 is import-tested with sentence-transformers 3.2.1.
+sentence-transformers==3.2.1
+transformers==4.46.3
+tokenizers==0.20.3
+regex==2024.11.6
+
+# --- Phase 4/5: agents, RAG and memory --------------------------------------
+# Windows VC-runtime note: ormsgpack 1.13.x fails to load its DLL on this
+# machine; 1.12.2 is import-tested with LangGraph 1.2.22.
+langgraph==1.2.22
+langchain-core==1.8.2
+langgraph-checkpoint==4.3.2
+langgraph-checkpoint-sqlite==3.1.3
+ormsgpack==1.12.2
+chromadb==0.5.23
+# Windows: grpcio 1.85.3 fails to load cygrpc DLL with this VC runtime;
+# 1.85.1 is import-tested with chromadb 0.5.23.
+grpcio==1.85.1
+# Chroma 0.5.23 pins tokenizers<=0.20.3; transformers 4.46.3 is the matching
+# BGE-compatible release. posthog 3.7.0 avoids the 8.x telemetry API break.
+posthog==3.7.0
+sqlalchemy==2.0.36
+
+# --- Phase 6: backend services and API --------------------------------------
+fastapi>=0.115
+uvicorn[standard]>=0.32
+requests>=2.31

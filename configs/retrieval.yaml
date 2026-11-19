@@ -1,0 +1,57 @@
+# ---------------------------------------------------------------------------
+# Multi-channel recall and candidate fusion.
+# Raw scores from different models are never added directly. Fusion supports
+# quota-based merging plus Reciprocal Rank Fusion (RRF) on normalized ranks.
+# ---------------------------------------------------------------------------
+retrieval:
+  itemcf:
+    enabled: true
+    top_k: 100
+    similarity: cosine
+    max_history: 50
+
+  two_tower:
+    enabled: true
+    top_k: 100
+    index_path: indexes/two_tower.faiss
+    item_ids_path: indexes/two_tower_item_ids.json
+
+  lightgcn:
+    enabled: true
+    top_k: 100
+    item_embeddings_path: indexes/lightgcn_item_embeddings.npy
+    item_ids_path: indexes/lightgcn_item_ids.json
+
+  popularity:
+    # Deterministic sanity-check channel: train interaction counts, excluding
+    # the target user's own train items. Not a personalised model.
+    enabled: true
+    pool_size: 2000
+
+  fusion:
+    # quota | rrf | quota_rrf. quota remains the default because it is
+    # marginally stronger on end-to-end DIN/MMR after adding popularity; RRF
+    # has higher fusion-only Recall@10/NDCG. All three are compared in
+    # logs/phase3_fusion_valid.json.
+    strategy: quota
+    total_candidates: 300
+    quota_per_channel: 100
+    rrf_k: 60
+    score_normalization: min_max
+    # Validation-calibrated reliability weights, proportional to each channel's
+    # corrected top-10 Recall (ItemCF 0.00278, Two-Tower 0.00596, LightGCN
+    # 0.00546) and normalised to the strongest channel. See the Phase 3 README
+    # audit note: the earlier ItemCF score was inflated by zero-score ties.
+    channel_weights:
+      itemcf: 0.47
+      two_tower: 1.0
+      lightgcn: 0.92
+      # Popularity is a sanity-check channel, not a trained model. 0.5 was
+      # selected on full valid end-to-end DIN/MMR; it improves R@50 and the
+      # DIN candidate pool but does not make DIN beat the pure popularity
+      # baseline on R@10. See the Phase 7 logs.
+      popularity: 0.5
+
+  filters:
+    exclude_interacted: true
+    exclude_disliked: true

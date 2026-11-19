@@ -1,0 +1,44 @@
+# ---------------------------------------------------------------------------
+# Data pipeline configuration.
+# `mode: sample` keeps development fast and reproducible; `mode: full` uses
+# the complete 5-Core dataset. The matching `.enabled` flag must also be true.
+# ---------------------------------------------------------------------------
+data:
+  mode: sample
+  random_seed: 42
+
+  sample:
+    enabled: true
+    max_users: 20000
+    # Cap raw reviews kept per item for the development sample. Full mode
+    # keeps every review belonging to the item catalog (null = no cap).
+    max_reviews_per_item: 50
+
+  full:
+    enabled: false
+    max_reviews_per_item: null
+
+  min_user_interactions: 5
+  min_item_interactions: 5
+
+  negative_sampling:
+    enabled: true
+    num_negatives: 4
+    seed: 42
+
+  paths:
+    raw_reviews: data/raw/reviews
+    raw_metadata: data/raw/metadata
+    raw_benchmark: data/raw/benchmark
+    processed: data/processed
+    splits: data/splits
+    features: data/features
+
+  download:
+    chunk_size_bytes: 1048576
+    segment_size_bytes: 33554432
+    connections: 16
+    max_retries: 5
+    timeout_seconds: 60
+    resume: true
+    verify_gzip: true

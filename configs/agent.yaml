@@ -1,0 +1,27 @@
+# ---------------------------------------------------------------------------
+# Multi-agent workflow, memory and review-RAG configuration.
+# Model names, API keys and endpoints live in `.env` (never in YAML).
+# ---------------------------------------------------------------------------
+agent:
+  llm:
+    temperature: 0.2
+    json_max_attempts: 2
+    tool_max_rounds: 5
+
+  workflow:
+    max_critic_retries: 2
+    max_total_steps: 20
+    enable_checkpointing: true
+    checkpoint_db_path: data/processed/agent_checkpoints.sqlite
+
+  memory:
+    short_term_max_turns: 10
+    profile_db_path: data/processed/user_profiles.sqlite
+    chroma_dir: indexes/chroma_memory
+    semantic_top_k: 5
+
+  rag:
+    review_index_dir: indexes/review_vectors
+    collection_name: product_reviews
+    top_k: 5
+    rerank_top_n: 3

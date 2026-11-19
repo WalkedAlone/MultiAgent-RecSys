@@ -1,0 +1,53 @@
+# ---------------------------------------------------------------------------
+# Model and training hyper-parameters.
+# `device: auto` resolves to CUDA when available, otherwise CPU.
+# This machine has no NVIDIA GPU, so training will run on CPU.
+# ---------------------------------------------------------------------------
+model:
+  device: auto
+  seed: 42
+
+  embedding:
+    model_name: BAAI/bge-small-en-v1.5
+    batch_size: 64
+    normalize: true
+    device: auto
+
+  two_tower:
+    user_embedding_dim: 64
+    item_embedding_dim: 64
+    hidden_dims: [256, 128, 64]
+    dropout: 0.1
+    learning_rate: 0.001
+    batch_size: 2048
+    epochs: 20
+    patience: 3
+    num_negatives: 4
+
+  lightgcn:
+    embedding_dim: 64
+    num_layers: 3
+    learning_rate: 0.001
+    batch_size: 4096
+    epochs: 50
+    patience: 5
+    num_negatives: 1
+
+  deepfm:
+    embedding_dim: 16
+    hidden_dims: [256, 128, 64]
+    dropout: 0.2
+    learning_rate: 0.001
+    batch_size: 1024
+    epochs: 10
+    patience: 2
+
+  din:
+    embedding_dim: 16
+    hidden_dims: [256, 128, 64]
+    attention_hidden_dim: 64
+    dropout: 0.2
+    learning_rate: 0.001
+    batch_size: 512
+    epochs: 10
+    patience: 2
