@@ -26,7 +26,6 @@ retrieval-augmented review evidence.
 - [Recommendation pipeline](#recommendation-pipeline)
 - [Agent workflow](#agent-workflow)
 - [Repository layout](#repository-layout)
-- [Data](#data)
 - [Quick start](#quick-start)
 - [Model artifacts](#model-artifacts)
 - [API](#api)
@@ -207,54 +206,6 @@ directories are intentionally absent from this repository.
 
 ---
 
-## Data
-
-The project uses the official **Amazon Reviews 2023 — Electronics** dataset
-(McAuley Lab). The dataset is not redistributed here.
-
-| Resource | Official link | Expected local path |
-|---|---|---|
-| Dataset home | https://amazon-reviews-2023.github.io/ | — |
-| Hugging Face mirror | https://huggingface.co/datasets/McAuley-Lab/Amazon-Reviews-2023 | — |
-| 5-core train | [Electronics.train.csv.gz](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/benchmark/5core/last_out_w_his/Electronics.train.csv.gz) | `data/raw/benchmark/5core/Electronics.train.csv.gz` |
-| 5-core valid | [Electronics.valid.csv.gz](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/benchmark/5core/last_out_w_his/Electronics.valid.csv.gz) | `data/raw/benchmark/5core/Electronics.valid.csv.gz` |
-| 5-core test | [Electronics.test.csv.gz](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/benchmark/5core/last_out_w_his/Electronics.test.csv.gz) | `data/raw/benchmark/5core/Electronics.test.csv.gz` |
-| Metadata | [meta_Electronics.jsonl.gz](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/meta_categories/meta_Electronics.jsonl.gz) | `data/raw/metadata/meta_Electronics.jsonl.gz` |
-| Reviews | [Electronics.jsonl.gz](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_2023/raw/review_categories/Electronics.jsonl.gz) | `data/raw/reviews/Electronics.jsonl.gz` |
-
-The included downloader uses the same URLs and verifies SHA-256 checksums:
-
-```bash
-python scripts/download_data.py --group all
-```
-
-### Current sample scale
-
-The public development run uses `sample` mode, not the complete Electronics
-category:
-
-| Item | Scale |
-|---|---:|
-| Users | 20,000 |
-| User-item interactions | 187,217 |
-| Catalog items | 86,074 |
-| Train interactions | 147,217 |
-| Train-scored items | 72,447 |
-| Valid / test targets | 20,000 / 20,000 |
-| Scorable valid / test users | 10,073 / 9,258 |
-| Cleaned reviews | 3,543,233 |
-| Review RAG documents | 144,894 |
-
-### Price and time boundary
-
-- Prices are **historical USD** values from Amazon Reviews 2023, not live
-  prices. Missing-price rate in the catalog is about **47.52%**.
-- Interaction timestamps run from 1999-12-18 to 2023-08-31; review timestamps
-  run from 1999-06-13 to 2023-09-12.
-- The repository does not claim live inventory, real-time pricing, or online
-  CTR improvement.
-
----
 
 ## Quick start
 
