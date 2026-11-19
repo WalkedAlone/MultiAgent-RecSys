@@ -57,8 +57,7 @@ retrieval-augmented review evidence.
 ---
 
 ## Architecture
-
-```mermaid
+```
 flowchart TD
     Client[API client] --> API[FastAPI]
     API -->|/api/v1/recommend/user/{user_id}| Engine[Recommendation Engine]
