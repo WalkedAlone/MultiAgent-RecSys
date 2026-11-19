@@ -389,7 +389,7 @@ Leave it empty for local development.
 - **Controlled tools.** `ProductToolkit` exposes a typed `ToolRegistry`; the
   workflow executes registered Python functions, not model-generated code.
 - **Critic loop.** Deterministic checks cover existence, price, category,
-  provenance and review-parent matching. DeepSeek adds semantic relevance
+  provenance and review-parent matching. adds semantic relevance
   review. Rejected items are excluded before retrying.
 - **Grounding.** Review evidence is retrieved per `parent_asin`; missing
   evidence is reported as `no_evidence`, never invented.
