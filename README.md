@@ -13,9 +13,8 @@ AgentRec combines four-way candidate retrieval, DIN ranking, MMR diversity
 re-ranking, a LangGraph multi-agent workflow, persistent user memory and
 retrieval-augmented review evidence.
 
-> **Backend-only repository.** The Streamlit frontend, the local test suite,
-> the Amazon dataset, and trained checkpoints/indexes are intentionally not
-> included. See [Data](#data) for the official dataset links and
+> **Backend-only repository.** 
+> See [Data](#data) for the official dataset links and
 > [Model artifacts](#model-artifacts) for the training commands.
 
 ---
