@@ -199,10 +199,6 @@ called again, up to the configured `max_critic_retries` (default 2).
 ├── docker-compose.yml
 ├── requirements.txt
 └── .env.example
-```
-
-The `frontend/`, `tests/`, `data/`, `checkpoints/`, `indexes/` and `logs/`
-directories are intentionally absent from this repository.
 
 ---
 
