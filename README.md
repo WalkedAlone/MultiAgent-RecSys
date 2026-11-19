@@ -168,7 +168,7 @@ Intent → Profile → Recommendation → Review RAG → Critic
 | **Profile Agent** | Real train facts + SQLite memory + optional Chroma semantic memory |
 | **Recommendation Agent** | Calls the controlled `recommend_products` tool; attaches reasons from real facts |
 | **Review RAG** | BGE-small + 16 Chroma shards; evidence scoped by `parent_asin` |
-| **Critic Agent** | Deterministic checks + DeepSeek semantic review; rejects unsupported claims |
+| **Critic Agent** | Deterministic checks + semantic review; rejects unsupported claims |
 | **Finalize** | Visible recommendations, status, assistant message, trace |
 | **Memory update** | Applies only explicit durable preferences; temporary constraints are ignored |
 
