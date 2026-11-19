@@ -30,7 +30,6 @@ retrieval-augmented review evidence.
 - [Model artifacts](#model-artifacts)
 - [API](#api)
 - [Design notes](#design-notes)
-- [What is not included](#what-is-not-included)
 - [Citation](#citation)
 
 ---
@@ -400,22 +399,7 @@ Leave it empty for local development.
 
 ---
 
-## What is not included
 
-This repository is intentionally backend-only:
-
-- **Frontend:** the Streamlit UI is not included.
-- **Tests:** the local test suite is not included.
-- **Data:** raw and processed Amazon files are not included; use the official
-  links above.
-- **Artifacts:** checkpoints, Faiss indexes, review vectors, SQLite memory and
-  logs are not included.
-- **Secrets:** `.env` is ignored; only `.env.example` is committed.
-
-This keeps the repository focused on the API, recommendation engine, Agent
-workflow and training/evaluation scripts.
-
----
 
 ## Citation
 
